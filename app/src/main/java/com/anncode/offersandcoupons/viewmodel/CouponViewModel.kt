@@ -14,6 +14,7 @@ class CouponViewModel : ViewModel(){
 
     private var couponObservable: CouponObservable = CouponObservable()
     private var recyclerCouponsAdapter: RecyclerCouponsAdapter? = null
+    var selected:MutableLiveData<Coupon> = MutableLiveData<Coupon>()
 
     fun callCoupons(){
         couponObservable.callCoupons()
@@ -37,4 +38,19 @@ class CouponViewModel : ViewModel(){
         var coupons: List<Coupon>? = couponObservable.getCoupons().value
         return coupons?.get(position)
     }
+
+    fun getCouponSelected(): MutableLiveData<Coupon> {
+        return selected
+    }
+    fun onItemClick(index: Int){
+        val coupon = getCouponAt(index)
+        selected.value = coupon
+    }
+}
+
+
+@BindingAdapter("imageUrl")
+fun getImageCouponAt(imgCouponDetail: CircleImageView, imageUrl: String ){
+    Picasso.get().load(imageUrl).resize(520, 520).centerCrop().into(imgCouponDetail )
+
 }

@@ -48,5 +48,12 @@ class MainActivity : AppCompatActivity(){
                 coupons: List<Coupon> -> Log.w("COUPON", coupons.get(0).title)
             couponViewModel?.setCouponsInRecyclerAdapter(coupons)
         })
+        setupListClick()
+    }
+
+    fun setupListClick() {
+        couponViewModel?.getCouponSelected()?.observe(this, Observer {
+                coupon: Coupon -> Log.i("CLICK", coupon.title)
+        })
     }
 }
